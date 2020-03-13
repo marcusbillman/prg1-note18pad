@@ -17,15 +17,17 @@ public class GUI {
     private JTextArea textArea;
     private JMenuBar menuBar;
     private JMenu fileMenu;
+    private JMenuItem openMenuItem;
     private JMenuItem saveMenuItem;
 
     private static Dimension preferredSize = new Dimension(500, 400);
 
     public GUI() {
         frame = new JFrame();
+        openMenuItem = new JMenuItem("Open");
         saveMenuItem = new JMenuItem("Save");
         fileMenu = new JMenu("File");
-        fileMenu.setMnemonic(KeyEvent.VK_F);
+        fileMenu.add(openMenuItem);
         fileMenu.add(saveMenuItem);
         menuBar = new JMenuBar();
         menuBar.add(fileMenu);
