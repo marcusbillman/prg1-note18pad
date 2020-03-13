@@ -23,6 +23,7 @@
           <component id="535d3" class="javax.swing.JTextArea" binding="textArea">
             <constraints/>
             <properties>
+              <font name="Arial" size="14" style="0"/>
               <lineWrap value="true"/>
               <margin top="5" left="10" bottom="10" right="10"/>
               <wrapStyleWord value="true"/>
