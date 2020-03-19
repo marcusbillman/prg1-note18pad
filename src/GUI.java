@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.*;
 
 /**
@@ -32,6 +31,13 @@ public class GUI {
         menuBar = new JMenuBar();
         menuBar.add(fileMenu);
 
+        openMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                open();
+            }
+        });
+
         saveMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,20 +66,44 @@ public class GUI {
         frame.setVisible(true);
     }
 
+    public void open() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Open");
+
+        int userSelection = fileChooser.showOpenDialog(frame);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String content = "";
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    content += line + "\n";
+                }
+                reader.close();
+                textArea.setText(content);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     public void save() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Specify a file to save");
+        fileChooser.setDialogTitle("Save as");
 
         int userSelection = fileChooser.showSaveDialog(frame);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
+            File file = fileChooser.getSelectedFile();
             String content = textArea.getText();
 
             try {
-                PrintWriter output = new PrintWriter(new BufferedWriter(new FileWriter(fileToSave.getAbsolutePath())));
-                output.print(content);
-                output.close();
+                PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file.getAbsolutePath())));
+                writer.print(content);
+                writer.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
