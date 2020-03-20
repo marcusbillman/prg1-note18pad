@@ -11,7 +11,7 @@ import java.io.*;
  */
 
 public class GUI {
-    private JFrame frame;
+    protected JFrame frame;
     private JPanel panel;
     private JTextArea textArea;
     private JMenuBar menuBar;
@@ -46,6 +46,14 @@ public class GUI {
                 save();
             }
         });
+
+        frame.setTitle("NoTE18pad");
+        frame.setPreferredSize(preferredSize);
+        frame.setContentPane(panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setJMenuBar(menuBar);
+        frame.pack();
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -57,15 +65,6 @@ public class GUI {
         }
 
         GUI gui = new GUI();
-
-        JFrame frame = new JFrame("GUI");
-        frame.setTitle("NoTE18pad");
-        frame.setPreferredSize(preferredSize);
-        frame.setContentPane(gui.panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setJMenuBar(gui.menuBar);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     public void open() {
@@ -86,6 +85,7 @@ public class GUI {
                 }
                 reader.close();
                 textArea.setText(content);
+                frame.setTitle(file.getName() + " - NoTE18pad");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -106,6 +106,7 @@ public class GUI {
                 PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file.getAbsolutePath())));
                 writer.print(content);
                 writer.close();
+                frame.setTitle(file.getName() + " - NoTE18pad");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
